@@ -1,24 +1,24 @@
 <template>
     <div>
-        <!-- <a-button type="primary" @click="visible = true">Add Book</a-button> -->
-        <a-modal v-model:open="visible" :title="!isEdit ? 'Add a new book' : 'Edit book'" @cancel="onCancel"
+        <a-modal v-model:open="visible" :title="!isEdit ? 'Create a new accout' : 'Edit account'" @cancel="onCancel"
             ok-text="Save" cancel-text="Cancel" @ok="onOk">
             <a-form ref="formRef" :model="formState" layout="vertical" name="form_in_modal">
                 <div class="input-box">
                     <a-form-item name="number" label="Number" :rules="[{ required: true, validator: validateNumber }]">
                         <a-input type="number" min="1" v-model:value="formState.number" />
                     </a-form-item>
-                    <a-form-item name="copies" label="Copie/s" :rules="[{ required: true, validator: validateCopies }]">
-                        <a-input min="1" type="number" v-model:value="formState.copies" />
+                    <a-form-item name="name" label="Name"
+                        :rules="[{ required: true, message: 'Please input the name!' }]">
+                        <a-input v-model:value="formState.name" />
                     </a-form-item>
                 </div>
-                <a-form-item name="name" label="Name"
-                    :rules="[{ required: true, message: 'Please input the name of book!' }]">
-                    <a-input v-model:value="formState.name" />
+                <a-form-item name="phoneNumber" label="Phone number"
+                    :rules="[{ required: true, validator: validatePhoneNumber }]">
+                    <a-input min="10" type="number" v-model:value="formState.phoneNumber" />
                 </a-form-item>
-                <a-form-item name="author" label="Author"
-                    :rules="[{ required: true, message: 'Please input the author of book!' }]">
-                    <a-input v-model:value="formState.author" />
+                <a-form-item name="address" label="Address"
+                    :rules="[{ required: true, message: 'Please input the address' }]">
+                    <a-input v-model:value="formState.address" />
                 </a-form-item>
             </a-form>
         </a-modal>
@@ -47,25 +47,24 @@ const props = defineProps({
 const formRef = ref();
 const visible = ref(false);
 const formState = reactive({
-    name: '',
     number: null,
-    copies: 1,
-    author: ''
+    name: '',
+    phoneNumber: null,
+    address: '',
 });
 
-const validateNumber = async (_rule, value) => validateField('book number', _rule, value);
-const validateCopies = async (_rule, value) => validateField('copie/s of book', _rule, value);
+const validateNumber = async (_rule, value) => validateField('account number', _rule, value);
 
-function validateField(fieldLabel, _rule, value) {
+const validatePhoneNumber = async (_rule, value) => {
     if (!value) {
-        return Promise.reject(`Please input the ${fieldLabel}!`);
+        return Promise.reject(`Please input the phone number`);
     }
-    if (value <= 0) {
-        return Promise.reject('Number must be greater than 0!');
+    if (value.length < 10) {
+        return Promise.reject('Number must be greater than or equal then 10!');
     } else {
         return Promise.resolve();
     }
-};
+}
 
 const onCancel = () => {
     formRef.value.resetFields();
@@ -82,9 +81,9 @@ const onOk = () => {
             emit('closeModal');
             formRef.value.resetFields();
             formState.name = '';
-            formState.number = '';
-            formState.copies = 1;
-            formState.author = '';
+            formState.number = null;
+            formState.address = '';
+            formState.phoneNumber = null;
             // console.log('reset formState: ', toRaw(formState));
         })
         .catch(info => {
@@ -92,16 +91,27 @@ const onOk = () => {
         });
 };
 
+function validateField(fieldLabel, _rule, value) {
+    if (!value) {
+        return Promise.reject(`Please input the ${fieldLabel}!`);
+    }
+    if (value <= 0) {
+        return Promise.reject('Number must be greater than 0!');
+    } else {
+        return Promise.resolve();
+    }
+};
+
 watchEffect(() => {
     if (Object.keys(props.bookData).length > 0 && props.isEdit === true) {
         formState.name = props.bookData[0].name;
-        formState.author = props.bookData[0].author;
-        formState.copies = props.bookData[0].copies;
+        formState.address = props.bookData[0].address;
+        formState.phoneNumber = props.bookData[0].phoneNumber;
         formState.number = props.bookData[0].number;
     } else {
         formState.name = '';
-        formState.author = '';
-        formState.copies = 1;
+        formState.address = '';
+        formState.phoneNumber = null;
         formState.number = null;
     }
 });

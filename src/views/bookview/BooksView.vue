@@ -21,14 +21,14 @@
           </a-button>
           <template #overlay>
             <a-menu>
-              <a-menu-item key="0">
-                <a-button type="link" @click="editBook(record.key)">
+              <a-menu-item key="0" @click="editBook(record.key)">
+                <a-button type="link">
                   <EditOutlined /> Edit
                 </a-button>
               </a-menu-item>
               <a-menu-divider />
-              <a-menu-item key="1">
-                <a-button type="link" danger @click="showDeleteConfirm(record.key)">
+              <a-menu-item key="1" @click="showDeleteConfirm(record.key)">
+                <a-button type="link" danger>
                   <DeleteOutlined /> Delete
                 </a-button>
               </a-menu-item>
@@ -38,7 +38,8 @@
       </template>
     </template>
   </a-table>
-  <BookModal :open-modal="openModal" @close-modal="openModal = false" :book-data="editableData" />
+  <BookModal :open-modal="openModal" :is-edit="isEdit" @close-modal="openModal = false; isEdit = false"
+    :book-data="editableData" />
 </template>
 
 <script setup>
@@ -51,6 +52,7 @@ import { Modal } from 'ant-design-vue';
 import gsap from 'gsap';
 
 const openModal = ref(false);
+const isEdit = ref(false);
 const searchValue = ref('');
 const filteredData = ref([]);
 const editableData = reactive({});
@@ -75,19 +77,19 @@ const columns = [
   {
     title: 'Number',
     dataIndex: 'number',
-    width: 25,
+    width: 100,
     align: 'center'
 
   },
   {
     title: 'Name',
     dataIndex: 'name',
-    width: 150,
+    width: 250,
   },
   {
     title: 'Author',
     dataIndex: 'author',
-    width: 150,
+    width: 250,
     responsive: ['md']
   },
   {
@@ -98,13 +100,13 @@ const columns = [
   {
     title: 'Action',
     dataIndex: 'operation',
-    width: 20,
+    width: 100,
     align: 'center'
   },
 ];
 const data = [...Array(100)].map((_, i) => ({
   key: i.toString(),
-  number: i,
+  number: parseInt(i),
   name: `Edward King ${i}`,
   author: `Some ${i}`,
   age: 32,
@@ -116,25 +118,24 @@ const showDeleteConfirm = (key) => {
   const bookDetail = cloneDeep(filteredData.value.filter(item => key === item.key));
   const bookIndex = filteredData.value.findIndex(item => item.key === key);
   Modal.confirm({
-    title: 'Are you sure delete this book?',
+    title: 'Are you sure to delete?',
     icon: createVNode(ExclamationCircleOutlined),
-    content: 'Name: ' + bookDetail[0].name,
+    content: 'Book name: ' + bookDetail[0].name,
     okText: 'Yes',
     okType: 'danger',
     cancelText: 'No',
     onOk() {
       filteredData.value.splice(bookIndex, 1);
       animateRows();
-      // delete editableData[0];
     },
     onCancel() {
-      // delete editableData[0];
       console.log('Cancel');
     },
   });
 };
 
 function editBook(key) {
+  isEdit.value = true;
   editableData[0] = cloneDeep(filteredData.value.filter(item => key === item.key)[0]);
   openModal.value = true;
 }
@@ -145,8 +146,8 @@ function animateRows() {
     rows.forEach((row, index) => {
       gsap.fromTo(
         row,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, delay: index * 0.05, duration: 0.5 }
+        { opacity: 0, x: 40 },
+        { opacity: 1, x: 0, delay: index * 0.05, duration: 0.4 }
       );
     });
   });

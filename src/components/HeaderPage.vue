@@ -20,6 +20,7 @@ const onClose = () => {
                 <img class="logo" src="../../public/Logo.png" alt="logo">
                 <nav>
                     <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/people-account">Account</RouterLink>
                     <RouterLink to="/books">Books</RouterLink>
                     <RouterLink to="/borrow-books">Borrow</RouterLink>
                 </nav>
@@ -32,6 +33,7 @@ const onClose = () => {
         style="backdrop-filter: blur(8px); background-color: transparent;">
         <nav class="mobile-nav">
             <RouterLink @click="onClose" to="/">Home</RouterLink>
+            <RouterLink @click="onClose" to="/people-account">Account</RouterLink>
             <RouterLink @click="onClose" to="/books">Books</RouterLink>
             <RouterLink @click="onClose" to="/borrow-books">Borrow</RouterLink>
         </nav>
