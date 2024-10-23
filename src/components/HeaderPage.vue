@@ -66,7 +66,7 @@ const logOut = () => {
 <style scoped>
 header {
     width: 100%;
-    padding: 1rem 2rem;
+    padding: 0.5rem 1rem;
     place-items: center;
 }
 
@@ -140,6 +140,11 @@ header .wrapper {
 
     .desktop-btn nav {
         display: flex;
+    }
+
+    header {
+        padding: 1rem 2rem;
+
     }
 
 }
