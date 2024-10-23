@@ -133,7 +133,7 @@ header .wrapper {
     display: none;
 }
 
-@media (min-width: 780px) {
+@media (min-width: 790px) {
     .menu-icon {
         display: none;
     }

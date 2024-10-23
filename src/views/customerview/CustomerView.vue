@@ -3,12 +3,12 @@
         <a-input-search class="search-bar" v-model:value="searchValue" placeholder="input search text" enter-button
             @search="onSearch">
             <template #addonBefore>
-                <a-select v-model:value="selectedOption" style="width: 150px">
+                <a-select v-model:value="selectedOption" class="dropdown-width">
                     <a-select-option v-for="item in filterOptions" :value="item.value">{{ item.type }}</a-select-option>
                 </a-select>
             </template>
         </a-input-search>
-        <a-button type="primary" @click="openModal = true">
+        <a-button class="modal-btn" :icon="h(PlusOutlined)" type="primary" @click="openModal = true">
             Create account
         </a-button>
     </div>
@@ -45,8 +45,8 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, watchEffect, reactive } from 'vue';
-import { MoreOutlined, DeleteOutlined, EditOutlined, DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
+import { ref, nextTick, onMounted, watchEffect, reactive, h } from 'vue';
+import { MoreOutlined, DeleteOutlined, EditOutlined, ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons-vue';
 import CustomerModal from './CustomerModal.vue';
 import { cloneDeep } from 'lodash-es';
 import { createVNode } from 'vue';
@@ -192,9 +192,4 @@ watchEffect(() => {
 </script>
 
 
-<style>
-.top-layer {
-    display: flex;
-    gap: 20px;
-}
-</style>
+<style></style>
