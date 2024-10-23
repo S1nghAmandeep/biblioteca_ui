@@ -33,6 +33,18 @@ a,
   bottom: 60px;
 }
 
+/* utility */
+.flex-display {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.mouse-pointer {
+  cursor: pointer;
+}
+
 @media (hover: hover) {
   a:hover {
     /* background-color: hsla(198, 100%, 37%, 0.2); */

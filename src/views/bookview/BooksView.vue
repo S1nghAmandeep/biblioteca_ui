@@ -3,7 +3,7 @@
     <a-input-search class="search-bar" v-model:value="searchValue" placeholder="input search text" enter-button
       @search="onSearch">
       <template #addonBefore>
-        <a-select v-model:value="selectedOption" style="width: 120px">
+        <a-select v-model:value="selectedOption" style="width: 150px">
           <a-select-option v-for="item in filterOptions" :value="item.value">{{ item.type }}</a-select-option>
         </a-select>
       </template>
@@ -38,8 +38,10 @@
       </template>
     </template>
   </a-table>
-  <BookModal :open-modal="openModal" :is-edit="isEdit" @close-modal="openModal = false; isEdit = false"
-    :book-data="editableData" />
+  <BookModal :open-modal="openModal" :is-edit="isEdit"
+    @edit-book="openNotificationWithIcon('success', 'Edit Book', `Book ${editableData[0].name} edited successfully`)"
+    @create-book="openNotificationWithIcon('success', 'Create Book', `Book created successfully`)"
+    @close-modal="openModal = false; isEdit = false" :book-data="editableData" />
 </template>
 
 <script setup>
@@ -50,6 +52,7 @@ import { cloneDeep } from 'lodash-es';
 import { createVNode } from 'vue';
 import { Modal } from 'ant-design-vue';
 import gsap from 'gsap';
+import { notification } from 'ant-design-vue';
 
 const openModal = ref(false);
 const isEdit = ref(false);
@@ -126,11 +129,20 @@ const showDeleteConfirm = (key) => {
     cancelText: 'No',
     onOk() {
       filteredData.value.splice(bookIndex, 1);
+      openNotificationWithIcon('success', 'Delete Book', `Book ${bookDetail[0].name} deleted successfully`)
       animateRows();
     },
     onCancel() {
       console.log('Cancel');
     },
+  });
+};
+
+const openNotificationWithIcon = (type, title, description) => {
+  notification[type]({
+    message: title,
+    description: description,
+    duration: 2.5
   });
 };
 

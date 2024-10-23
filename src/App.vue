@@ -1,10 +1,5 @@
-<script setup>
-import HeaderPage from './components/HeaderPage.vue'
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
-  <div class="app-body">
+  <div v-if="mainStore.isLoged" class="app-body">
     <div class="header">
       <HeaderPage />
     </div>
@@ -12,9 +7,38 @@ import { RouterView } from 'vue-router'
       <RouterView />
     </main>
   </div>
+  <div v-else class="login-page-wrapper">
+    <div class="app-body login-page-card">
+      <LoginView />
+    </div>
+  </div>
 </template>
 
+<script setup>
+import HeaderPage from './components/HeaderPage.vue'
+import LoginView from './views/LoginView.vue';
+import { RouterView } from 'vue-router'
+import { useMainStore } from './stores/mainStore';
+
+
+const mainStore = useMainStore();
+</script>
+
 <style scoped>
+.login-page-wrapper {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-page-card {
+  padding: 2rem;
+  width: 800px;
+}
+
 .app-body {
   display: flex;
   flex-direction: column;

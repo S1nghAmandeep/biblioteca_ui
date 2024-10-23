@@ -28,7 +28,7 @@
 <script setup>
 import { reactive, ref, watch, watchEffect } from 'vue';
 
-const emit = defineEmits(['closeModal']);
+const emit = defineEmits(['closeModal', 'accountEdited', 'accountCreated']);
 const props = defineProps({
     bookData: {
         type: Object,
@@ -79,6 +79,11 @@ const onOk = () => {
             // console.log('formState: ', toRaw(formState));
             visible.value = false;
             emit('closeModal');
+            if (props.isEdit) {
+                emit('accountEdited');
+            } else {
+                emit('accountCreated');
+            }
             formRef.value.resetFields();
             formState.name = '';
             formState.number = null;

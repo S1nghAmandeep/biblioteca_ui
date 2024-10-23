@@ -1,10 +1,15 @@
+<template>
+  <main class="bg">
+    <div class="clock" id="clock1" ref="clockElement"></div>
+  </main>
+</template>
+
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const clockElement = ref(null)
+const clockElement = ref(null);
 
 onMounted(() => {
-  const $ = window.$;
 
   // Data di partenza
   const start = new Date();
@@ -13,19 +18,16 @@ onMounted(() => {
 
   const now = new Date();
   const diff = (now.getTime() - start.getTime()) / 1000;
+  const el = document.querySelector('.clock')
 
   // Inizializza l'orologio FlipClock su clockElement
-  $(clockElement.value).FlipClock(diff, {
+  clockElement.value = new FlipClock(el, diff, {
     clockFace: 'HourlyCounter',
+    showseconds: false,
   });
 });
 </script>
 
-<template>
-  <main class="bg">
-    <div class="clock" id="clock1" ref="clockElement"></div>
-  </main>
-</template>
 
 <style>
 #clock1 {

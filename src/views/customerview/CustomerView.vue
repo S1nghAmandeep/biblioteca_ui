@@ -38,18 +38,21 @@
             </template>
         </template>
     </a-table>
-    <AccountModal :open-modal="openModal" :is-edit="isEdit" @close-modal="openModal = false; isEdit = false"
-        :book-data="editableData" />
+    <CustomerModal :open-modal="openModal" :is-edit="isEdit"
+        @account-edited="openNotificationWithIcon('success', 'Edit account', `Account ${editableData[0].name} edited successfully`)"
+        @account-created="openNotificationWithIcon('success', 'Create account', 'Account created successfully')"
+        @close-modal="openModal = false; isEdit = false" :book-data="editableData" />
 </template>
 
 <script setup>
 import { ref, nextTick, onMounted, watchEffect, reactive } from 'vue';
 import { MoreOutlined, DeleteOutlined, EditOutlined, DownOutlined, ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import AccountModal from './AccountModal.vue';
+import CustomerModal from './CustomerModal.vue';
 import { cloneDeep } from 'lodash-es';
 import { createVNode } from 'vue';
 import { Modal } from 'ant-design-vue';
 import gsap from 'gsap';
+import { notification } from 'ant-design-vue';
 
 const openModal = ref(false);
 const isEdit = ref(false);
@@ -58,12 +61,12 @@ const filteredData = ref([]);
 const editableData = reactive({});
 const filterOptions = [
     {
-        type: 'Number',
-        value: 'number'
-    },
-    {
         type: 'Name',
         value: 'name'
+    },
+    {
+        type: 'Number',
+        value: 'number'
     },
     {
         type: 'Phome numbre',
@@ -125,11 +128,20 @@ const showDeleteConfirm = (key) => {
         cancelText: 'No',
         onOk() {
             filteredData.value.splice(bookIndex, 1);
+            openNotificationWithIcon('success', 'Delete account', `Account ${bookDetail[0].name} deleted successfully`);
             animateRows();
         },
         onCancel() {
             console.log('Cancel');
         },
+    });
+};
+
+const openNotificationWithIcon = (type, title, description) => {
+    notification[type]({
+        message: title,
+        description: description,
+        duration: 2.5
     });
 };
 

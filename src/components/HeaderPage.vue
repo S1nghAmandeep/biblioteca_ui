@@ -1,8 +1,52 @@
+<template>
+    <header>
+        <div class="wrapper">
+            <div class="desktop-btn">
+                <img class="logo" src="../../public/Logo.png" alt="logo">
+                <nav>
+                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/customer-account">Customer</RouterLink>
+                    <RouterLink to="/books">Books</RouterLink>
+                    <RouterLink to="/borrow-books">Borrow</RouterLink>
+                </nav>
+            </div>
+            <div class="flex-display">
+                <a-popover placement="bottom" trigger="click">
+                    <template #content>
+                        <a-button type="text" @click="logOut" danger>
+                            <LogoutOutlined /> Logout
+                        </a-button>
+                    </template>
+                    <a-avatar class="mouse-pointer" :size="35" style="background-color: #006BFF">
+                        <template #icon>
+                            <UserOutlined />
+                        </template>
+                    </a-avatar>
+                </a-popover>
+                <menu-outlined class="menu-icon" @click="showDrawer" />
+            </div>
+        </div>
+    </header>
+    <a-drawer placement="right" :closable="false" :open="open" @close="onClose"
+        style="backdrop-filter: blur(8px); background-color: transparent;">
+        <nav class="mobile-nav">
+            <RouterLink @click="onClose" to="/">Home</RouterLink>
+            <RouterLink @click="onClose" to="/customer-account">Customer</RouterLink>
+            <RouterLink @click="onClose" to="/books">Books</RouterLink>
+            <RouterLink @click="onClose" to="/borrow-books">Borrow</RouterLink>
+        </nav>
+    </a-drawer>
+</template>
+
 <script setup>
 import { RouterLink } from 'vue-router'
-import { MenuOutlined } from '@ant-design/icons-vue'
+import { MenuOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons-vue'
 import { ref } from 'vue';
+import { useMainStore } from '@/stores/mainStore';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const mainStore = useMainStore();
 const open = ref(false);
 const showDrawer = () => {
     open.value = true;
@@ -11,34 +55,13 @@ const onClose = () => {
     open.value = false;
 };
 
+const logOut = () => {
+    mainStore.isLoged = false;
+    router.push('/login');
+}
+
 </script>
 
-<template>
-    <header>
-        <div class="wrapper">
-            <div class="desktop-btn">
-                <img class="logo" src="../../public/Logo.png" alt="logo">
-                <nav>
-                    <RouterLink to="/">Home</RouterLink>
-                    <RouterLink to="/people-account">Account</RouterLink>
-                    <RouterLink to="/books">Books</RouterLink>
-                    <RouterLink to="/borrow-books">Borrow</RouterLink>
-                </nav>
-            </div>
-            <menu-outlined class="menu-icon" @click="showDrawer" />
-        </div>
-    </header>
-
-    <a-drawer placement="right" :closable="false" :open="open" @close="onClose"
-        style="backdrop-filter: blur(8px); background-color: transparent;">
-        <nav class="mobile-nav">
-            <RouterLink @click="onClose" to="/">Home</RouterLink>
-            <RouterLink @click="onClose" to="/people-account">Account</RouterLink>
-            <RouterLink @click="onClose" to="/books">Books</RouterLink>
-            <RouterLink @click="onClose" to="/borrow-books">Borrow</RouterLink>
-        </nav>
-    </a-drawer>
-</template>
 
 <style scoped>
 header {
@@ -110,7 +133,7 @@ header .wrapper {
     display: none;
 }
 
-@media (min-width: 720px) {
+@media (min-width: 780px) {
     .menu-icon {
         display: none;
     }
