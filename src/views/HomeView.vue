@@ -37,7 +37,7 @@ onMounted(() => {
 }
 
 .bg {
-  min-height: 67vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,6 +46,10 @@ onMounted(() => {
 }
 
 @media (min-width: 720px) {
+
+  .bg {
+    min-height: 67vh;
+  }
 
   .flip-clock-wrapper ul {
     height: 186px;

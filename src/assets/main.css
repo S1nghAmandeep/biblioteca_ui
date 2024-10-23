@@ -3,7 +3,7 @@
 #app {
   /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   font-weight: normal;
 }
 
@@ -68,6 +68,10 @@ a,
 }
 
 @media (min-width: 600px) {
+  #app {
+    padding: 2rem;
+  }
+
   .modal-btn {
     margin-bottom: 0;
     flex-grow: 0;

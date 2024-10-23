@@ -54,6 +54,12 @@ const mainStore = useMainStore();
 
 .page-content {
   flex-grow: 1;
-  padding: 2rem;
+  padding: 1rem;
+}
+
+@media (min-width: 600px) {
+  .page-content {
+    padding: 2rem;
+  }
 }
 </style>
