@@ -120,11 +120,13 @@ const getDate = (dateStr) => {
 
 .row .card .temprature {
     font-size: 4rem;
+    color: #333333;
     margin: 0;
 }
 
 .row .card .place {
     font-size: 0.7rem;
+    color: #333333;
     margin: 0 0 2rem;
 }
 
@@ -132,11 +134,13 @@ const getDate = (dateStr) => {
     font-size: 3rem;
     align-self: center;
     text-align: right;
+    color: #333333;
 }
 
 .row .card .today {
     font-size: 1rem;
     text-align: right;
+    color: #333333;
 }
 
 /* days card */
@@ -155,6 +159,7 @@ const getDate = (dateStr) => {
     flex-direction: column;
     justify-content: center;
     padding: 5px;
+    color: #333333;
 }
 
 .row .card-days .days:last-child {
@@ -163,10 +168,12 @@ const getDate = (dateStr) => {
 
 .row .card-days .sm-icon {
     font-size: 22px;
+    color: #333333;
 }
 
 .row .card-days .days-text {
     font-size: 7px;
+    color: #333333;
 }
 
 @media (min-width: 700px) {
