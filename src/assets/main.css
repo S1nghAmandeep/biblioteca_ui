@@ -45,6 +45,10 @@ a,
   justify-content: center;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .mouse-pointer {
   cursor: pointer;
 }

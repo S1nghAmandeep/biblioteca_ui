@@ -20,8 +20,7 @@
         </a-form-item>
 
         <a-form-item>
-            <a-button style="width: 100%" :disabled="disabled" type="primary" html-type="submit"
-                class="login-form-button">
+            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
                 Log in
             </a-button>
         </a-form-item>
@@ -55,11 +54,7 @@ const disabled = computed(() => {
 });
 </script>
 <style scoped>
-#components-form-demo-normal-login .login-form {
-    max-width: 300px;
-}
-
-#components-form-demo-normal-login .login-form-button {
+.login-form-button {
     width: 100%;
 }
 
