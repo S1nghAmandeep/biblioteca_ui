@@ -58,7 +58,7 @@ onMounted(() => {
 @media (min-width: 720px) {
 
   .bg {
-    min-height: 67vh;
+    min-height: 70vh;
     justify-content: center;
   }
 

@@ -3,7 +3,7 @@
     <a-form layout="vertical" :model="formState" name="normal_login" class="login-form" @finish="onFinish"
         @finishFailed="onFinishFailed">
         <a-form-item label="Email" name="email" :rules="[{ required: true, message: 'Please input your email!' }]">
-            <a-input v-model:value="formState.email">
+            <a-input type="email" v-model:value="formState.email">
                 <template #prefix>
                     <UserOutlined class="site-form-item-icon" />
                 </template>
@@ -20,7 +20,8 @@
         </a-form-item>
 
         <a-form-item>
-            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">
+            <a-button style="width: 100%;;" :disabled="disabled" type="primary" html-type="submit"
+                class="login-form-button">
                 Log in
             </a-button>
         </a-form-item>
