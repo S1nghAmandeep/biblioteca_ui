@@ -62,6 +62,10 @@ onMounted(() => {
     justify-content: center;
   }
 
+  #clock1 {
+    margin: initial;
+  }
+
   .flip-clock-wrapper ul {
     height: 186px;
     width: 106px;
