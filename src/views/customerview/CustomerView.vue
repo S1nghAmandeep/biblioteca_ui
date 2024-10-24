@@ -1,7 +1,7 @@
 <template>
     <div class="top-layer">
-        <a-input-search class="search-bar" v-model:value="searchValue" placeholder="input search text" enter-button
-            @search="onSearch">
+        <a-input-search class="search-bar" :allowClear="true" v-model:value="searchValue"
+            placeholder="input search text" enter-button @search="onSearch">
             <template #addonBefore>
                 <a-select v-model:value="selectedOption" class="dropdown-width">
                     <a-select-option v-for="item in filterOptions" :value="item.value">{{ item.type }}</a-select-option>
@@ -98,7 +98,9 @@ const columns = [
     {
         title: 'Address',
         dataIndex: 'address',
-        responsive: ['md']
+        responsive: ['md'],
+        width: 250
+
     },
     {
         title: 'Action',
@@ -112,6 +114,7 @@ const data = [...Array(100)].map((_, i) => ({
     number: parseInt(i),
     name: `Albert Jobs ${i}`,
     phoneNumber: 3212345323,
+    deposit: i,
     address: `London, Park Lane no. ${i}`,
     copies: 2
 }));

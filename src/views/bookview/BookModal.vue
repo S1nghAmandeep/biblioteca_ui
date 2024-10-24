@@ -12,9 +12,13 @@
                         <a-input min="1" type="number" v-model:value="formState.copies" />
                     </a-form-item>
                 </div>
-                <a-form-item name="name" label="Name"
-                    :rules="[{ required: true, message: 'Please input the name of book!' }]">
-                    <a-input v-model:value="formState.name" />
+                <a-form-item name="punjabiTitle" label="Punjabi Title"
+                    :rules="[{ required: true, message: 'Please input the punjabi title of book!' }]">
+                    <a-input v-model:value="formState.punjabiTitle" />
+                </a-form-item>
+                <a-form-item name="title" label="Title"
+                    :rules="[{ required: true, message: 'Please input the title of book!' }]">
+                    <a-input v-model:value="formState.title" />
                 </a-form-item>
                 <a-form-item name="author" label="Author"
                     :rules="[{ required: true, message: 'Please input the author of book!' }]">
@@ -47,7 +51,8 @@ const props = defineProps({
 const formRef = ref();
 const visible = ref(false);
 const formState = reactive({
-    name: '',
+    punjabiTitle: '',
+    title: '',
     number: null,
     copies: 1,
     author: ''
@@ -86,7 +91,8 @@ const onOk = () => {
                 emit('createBook');
             }
             formRef.value.resetFields();
-            formState.name = '';
+            formState.title = '';
+            formState.punjabiTitle = '';
             formState.number = '';
             formState.copies = 1;
             formState.author = '';
@@ -99,12 +105,14 @@ const onOk = () => {
 
 watchEffect(() => {
     if (Object.keys(props.bookData).length > 0 && props.isEdit === true) {
-        formState.name = props.bookData[0].name;
+        formState.title = props.bookData[0].title;
+        formState.punjabiTitle = props.bookData[0].punjabiTitle;
         formState.author = props.bookData[0].author;
         formState.copies = props.bookData[0].copies;
         formState.number = props.bookData[0].number;
     } else {
-        formState.name = '';
+        formState.title = '';
+        formState.punjabiTitle = '';
         formState.author = '';
         formState.copies = 1;
         formState.number = null;

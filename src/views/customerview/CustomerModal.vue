@@ -7,11 +7,13 @@
                     <a-form-item name="number" label="Number" :rules="[{ required: true, validator: validateNumber }]">
                         <a-input type="number" min="1" v-model:value="formState.number" />
                     </a-form-item>
-                    <a-form-item name="name" label="Name"
-                        :rules="[{ required: true, message: 'Please input the name!' }]">
-                        <a-input v-model:value="formState.name" />
+                    <a-form-item name="deposit" label="D€posit" :rules="[{ validator: validateDeposit }]">
+                        <a-input type="number" min="1" v-model:value="formState.deposit" />
                     </a-form-item>
                 </div>
+                <a-form-item name="name" label="Name" :rules="[{ required: true, message: 'Please input the name!' }]">
+                    <a-input v-model:value="formState.name" />
+                </a-form-item>
                 <a-form-item name="phoneNumber" label="Phone number"
                     :rules="[{ required: true, validator: validatePhoneNumber }]">
                     <a-input min="10" type="number" v-model:value="formState.phoneNumber" />
@@ -55,6 +57,15 @@ const formState = reactive({
 
 const validateNumber = async (_rule, value) => validateField('account number', _rule, value);
 
+const validateDeposit = async (_rule, value) => {
+    if (!value) {
+        return Promise.resolve();
+    }
+    if (value <= 0) {
+        return Promise.reject(`Depost must be greater than 0`);
+    }
+}
+
 const validatePhoneNumber = async (_rule, value) => {
     if (!value) {
         return Promise.reject(`Please input the phone number`);
@@ -87,6 +98,7 @@ const onOk = () => {
             formRef.value.resetFields();
             formState.name = '';
             formState.number = null;
+            formState.deposit = null;
             formState.address = '';
             formState.phoneNumber = null;
             // console.log('reset formState: ', toRaw(formState));
@@ -110,11 +122,13 @@ function validateField(fieldLabel, _rule, value) {
 watchEffect(() => {
     if (Object.keys(props.bookData).length > 0 && props.isEdit === true) {
         formState.name = props.bookData[0].name;
+        formState.deposit = props.bookData[0].deposit;
         formState.address = props.bookData[0].address;
         formState.phoneNumber = props.bookData[0].phoneNumber;
         formState.number = props.bookData[0].number;
     } else {
         formState.name = '';
+        formState.deposit = '';
         formState.address = '';
         formState.phoneNumber = null;
         formState.number = null;

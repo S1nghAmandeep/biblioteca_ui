@@ -1,7 +1,7 @@
 <template>
   <div class="top-layer">
-    <a-input-search class="search-bar" v-model:value="searchValue" placeholder="input search text" enter-button
-      @search="onSearch">
+    <a-input-search class="search-bar" :allowClear="true" v-model:value="searchValue" placeholder="input search text"
+      enter-button @search="onSearch">
       <template #addonBefore>
         <a-select v-model:value="selectedOption" class="dropdown-width">
           <a-select-option v-for="item in filterOptions" :value="item.value">{{ item.type }}</a-select-option>
@@ -65,8 +65,12 @@ const filterOptions = [
     value: 'number'
   },
   {
-    type: 'Name',
-    value: 'name'
+    type: 'Punjabi Title',
+    value: 'punjabiTitle'
+  },
+  {
+    type: 'Title',
+    value: 'title'
   },
   {
     type: 'Author',
@@ -80,25 +84,31 @@ const columns = [
   {
     title: 'Number',
     dataIndex: 'number',
+    align: 'center',
     width: 100,
-    align: 'center'
-
   },
   {
-    title: 'Name',
-    dataIndex: 'name',
-    width: 250,
+    title: 'Punjabi title',
+    dataIndex: 'punjabiTitle',
+    width: 150
+  },
+  {
+    title: 'Title',
+    dataIndex: 'title',
+    width: 150,
+    responsive: ['sm']
   },
   {
     title: 'Author',
     dataIndex: 'author',
-    width: 250,
+    width: 150,
     responsive: ['md']
   },
   {
     title: 'Address',
     dataIndex: 'address',
-    responsive: ['md']
+    responsive: ['md'],
+    width: 250
   },
   {
     title: 'Action',
@@ -110,7 +120,8 @@ const columns = [
 const data = [...Array(100)].map((_, i) => ({
   key: i.toString(),
   number: parseInt(i),
-  name: `Edward King ${i}`,
+  punjabiTitle: `ਕਿਤਾਬ ${i}`,
+  title: `Edward King ${i}`,
   author: `Some ${i}`,
   age: 32,
   address: `London, Park Lane no. ${i}`,
@@ -167,8 +178,10 @@ function animateRows() {
 
 function onSearch() {
   filteredData.value = data.filter((item) => {
-    if (selectedOption.value === 'name') {
-      return item.name.toLowerCase().includes(searchValue.value.trim().toLowerCase());
+    if (selectedOption.value === 'title') {
+      return item.title.toLowerCase().includes(searchValue.value.trim().toLowerCase());
+    } else if (selectedOption.value === 'punjabiTitle') {
+      return item.punjabiTitle.includes(searchValue.value.trim());
     } else if (selectedOption.value === 'number') {
       return item.number.toString().includes(searchValue.value.trim());
     } else if (selectedOption.value === 'author') {
