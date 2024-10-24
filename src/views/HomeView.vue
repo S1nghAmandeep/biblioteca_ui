@@ -1,11 +1,13 @@
 <template>
   <main class="bg">
     <div class="clock" id="clock1" ref="clockElement"></div>
+    <WeatherWidget />
   </main>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import WeatherWidget from '@/components/weatherapp/WeatherWidget.vue';
 
 const clockElement = ref(null);
 
@@ -37,12 +39,21 @@ onMounted(() => {
 }
 
 .bg {
-  min-height: 80vh;
+  min-height: 84vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   /* background-color: white; */
   border-radius: 0.5rem;
+}
+
+.flip-clock-wrapper ul:nth-last-child(-n+2) {
+  display: none;
+}
+
+.seconds {
+  display: none;
 }
 
 @media (min-width: 720px) {
@@ -68,5 +79,15 @@ onMounted(() => {
   .flip-clock-wrapper ul li a div.up:after {
     top: 91px;
   }
+
+  .flip-clock-wrapper ul:nth-last-child(-n+2) {
+    display: block;
+  }
+
+  .seconds {
+    display: block;
+  }
+
+
 }
 </style>
