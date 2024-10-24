@@ -67,7 +67,7 @@ const logOut = () => {
 header {
     width: 100%;
     padding: 0.5rem 1rem;
-    place-items: center;
+    /* place-items: center; */
 }
 
 nav {
