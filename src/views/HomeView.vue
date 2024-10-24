@@ -36,16 +36,15 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 4rem 0 3rem 0;
 }
 
 .bg {
-  min-height: 84vh;
+  min-height: 75vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* background-color: white; */
-  border-radius: 0.5rem;
+  /* justify-content: center; */
 }
 
 .flip-clock-wrapper ul:nth-last-child(-n+2) {
@@ -60,6 +59,7 @@ onMounted(() => {
 
   .bg {
     min-height: 67vh;
+    justify-content: center;
   }
 
   .flip-clock-wrapper ul {
